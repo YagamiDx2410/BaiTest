@@ -10,7 +10,7 @@ namespace BaiTest
 {
     internal class Program
     {
-        private int X, Y;
+        private int X, Y ;
         private ConsoleColor bg, fg;
         static void nhap(int[] A, int N)
         {
@@ -62,12 +62,8 @@ namespace BaiTest
                     }
                 }
             }
-
-            for (int i = 0; i < N; i++)
-            {
-                Console.Write(A[i] + " ");
-            }
-            Console.WriteLine(" ");
+            
+            Console.WriteLine(" DA SAP XEP XONG ");
         }
         static void sapxepgiam(int[] A, int N)
         {
@@ -85,11 +81,9 @@ namespace BaiTest
                 }
             }
 
-            for (int i = 0; i < N; i++)
-            {
-                Console.Write(A[i] + " ");
-            }
-            Console.WriteLine(" ");
+            
+            Console.WriteLine(" DA SAP XEP XONG ");
+
         }
         static void demosapxeptang(int[] A, int N)
         {
@@ -117,20 +111,61 @@ namespace BaiTest
 
             xuat(A, N);
         }
-        static void menu(int[] A, int N)
+        static void menu(int[] A, int N, int Y)
         {
             Console.Clear();
+
+            DrawMenu(1);
+            Readkeys(A, N, Y);
             
-            Console.WriteLine("***************MAIN MENU**********");
-            Console.WriteLine("1.NHAP LAI");
-            Console.WriteLine("2.SAP XEP TANG");
-            Console.WriteLine("3.SAP XEP GIAM");
-            Console.WriteLine("4.IN DAY SO");
-            Console.WriteLine("5.DEMO SAP XEP TANG");
-            Console.WriteLine("6.THOAT");
-            Readkeys(A, N);
         }
-        
+
+        static void DrawMenu(int select)
+        {
+            string[] items = { "1.NHAP LAI" , "2.SAP XEP TANG", "3.SAP XEP GIAM", "4.IN DAY SO", "5.DEMO SAP XEP TANG", "6.THOAT" };
+            Console.WriteLine("***************MAIN MENU**********");
+            int x = 10, y = 10;
+            for(int i=0; i < items.Length; i++)
+            {
+                Console.ForegroundColor = select == i + 1 ? ConsoleColor.Red : ConsoleColor.White;
+                Console.SetCursorPosition(x, y + i);
+                Console.Write(items[i]);
+            }
+        }
+        static void menu1(int[] A, int N,int Y)
+        {
+            Console.Clear();
+
+            DrawMenu(Y);
+            switch (Y)
+            {
+                case 1:
+                    Readkeys(A, N,Y);                    
+                    break;
+
+                case 2:
+                    //Readkeys(A, N,Y);
+                    chon(A, N, Y);
+                    break;
+
+                case 3:
+                    Readkeys(A, N,Y);                    
+                    break;
+
+                case 4:
+                    Readkeys(A, N,Y);
+                    break;
+                case 5:
+                    Readkeys(A, N,Y);                    
+                    break;
+                case 6:
+                    Readkeys(A, N,Y);                    
+                    break;
+                default:                    
+                    break;
+
+            }
+        }
         static void nhapso(int[] A, int N)
         {
             int chon;
@@ -170,9 +205,9 @@ namespace BaiTest
 
             } while (chon != 6);
         }
-        static void Readkeys(int[] A, int N)
+        static void Readkeys(int[] A, int N,int Y)
         {
-            int Y = 1;
+            
 
             ConsoleKeyInfo key = new ConsoleKeyInfo();
             while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape)
@@ -180,27 +215,28 @@ namespace BaiTest
                 key = Console.ReadKey(true);
                 switch (key.Key)
                 {
-
+                    
 
                     case ConsoleKey.UpArrow:
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        
                         Y = Y - 1;
-                        menu(A, Y);
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        menu1(A, N, Y);
+                        
+                        
 
                         if (Y < 1) Y = 6;
 
                         break;
                     case ConsoleKey.DownArrow:
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        
                         Y = Y + 1;
-                        menu(A, Y);
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        menu1(A, N, Y);
+
                         if (Y > 6) Y = 1;
                         
                         break;
                     case ConsoleKey.Enter:
-                        Console.Clear();
+                        
                         chon(A, N, Y);
                         
                         break;
@@ -245,25 +281,16 @@ namespace BaiTest
                 }
             } while (Y != 6);
         }
-        public void Draw()
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            
-        }
-        public void Clear()
-        {
-            Console.BackgroundColor = ConsoleColor.Black;
-            
-        }
+        
         static void Main(string[] args)
         {
-            
+            int Y = 1;
             Console.Write("N = ");
             int N = int.Parse(Console.ReadLine());
             int[] A = new int[100];
             nhap(A, N);
-            menu(A,N);
-            
+            menu(A,N,Y);
+            //nhapso(A, N);
             
             Console.ReadLine();
         }
