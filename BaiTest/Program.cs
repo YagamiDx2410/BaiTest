@@ -117,8 +117,10 @@ namespace BaiTest
 
             xuat(A, N);
         }
-        static void menu()
+        static void menu(int[] A, int N)
         {
+            Console.Clear();
+            
             Console.WriteLine("***************MAIN MENU**********");
             Console.WriteLine("1.NHAP LAI");
             Console.WriteLine("2.SAP XEP TANG");
@@ -126,7 +128,9 @@ namespace BaiTest
             Console.WriteLine("4.IN DAY SO");
             Console.WriteLine("5.DEMO SAP XEP TANG");
             Console.WriteLine("6.THOAT");
+            Readkeys(A, N);
         }
+        
         static void nhapso(int[] A, int N)
         {
             int chon;
@@ -156,7 +160,7 @@ namespace BaiTest
                         demosapxeptang(A, N);
                         break;
                     case 6:
-
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Nhap lai ban oi");
@@ -166,9 +170,9 @@ namespace BaiTest
 
             } while (chon != 6);
         }
-        private void Readkeys()
+        static void Readkeys(int[] A, int N)
         {
-
+            int Y = 1;
 
             ConsoleKeyInfo key = new ConsoleKeyInfo();
             while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape)
@@ -179,14 +183,26 @@ namespace BaiTest
 
 
                     case ConsoleKey.UpArrow:
-                        Console.Clear();
+                        Console.BackgroundColor = ConsoleColor.Red;
                         Y = Y - 1;
-                        menu();
+                        menu(A, Y);
+                        Console.BackgroundColor = ConsoleColor.Black;
+
+                        if (Y < 1) Y = 6;
+
                         break;
                     case ConsoleKey.DownArrow:
-                        Console.Clear();
+                        Console.BackgroundColor = ConsoleColor.Red;
                         Y = Y + 1;
-                        menu();
+                        menu(A, Y);
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        if (Y > 6) Y = 1;
+                        
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        chon(A, N, Y);
+                        
                         break;
 
 
@@ -194,15 +210,60 @@ namespace BaiTest
                 }
             }
         }
-            static void Main(string[] args)
+        static void chon(int[] A, int N, int Y)
+        {
+            do
+            {
+
+                switch (Y)
+                {
+                    case 1:
+                        nhap(A, N);
+                        break;
+
+                    case 2:
+                        sapxeptang(A, N);
+                        break;
+
+                    case 3:
+                        sapxepgiam(A, N);
+                        break;
+
+                    case 4:
+                        xuat(A, N);
+                        break;
+                    case 5:
+                        demosapxeptang(A, N);
+                        break;
+                    case 6:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Nhap lai ban oi");
+                        break;
+
+                }
+            } while (Y != 6);
+        }
+        public void Draw()
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            
+        }
+        public void Clear()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            
+        }
+        static void Main(string[] args)
         {
             
             Console.Write("N = ");
             int N = int.Parse(Console.ReadLine());
             int[] A = new int[100];
             nhap(A, N);
-            menu();
-            nhapso(A,N);
+            menu(A,N);
+            
             
             Console.ReadLine();
         }
