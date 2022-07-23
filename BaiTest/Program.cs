@@ -10,6 +10,8 @@ namespace BaiTest
 {
     internal class Program
     {
+        private int X, Y;
+        private ConsoleColor bg, fg;
         static void nhap(int[] A, int N)
         {
             for (int i = 0; i < N; i++)
@@ -125,8 +127,9 @@ namespace BaiTest
             Console.WriteLine("5.DEMO SAP XEP TANG");
             Console.WriteLine("6.THOAT");
         }
-        static void nhapso()
+        static void nhapso(int[] A, int N)
         {
+            int chon;
             do
             {
                 Console.Write("NHAP LUA CHON:");
@@ -163,15 +166,43 @@ namespace BaiTest
 
             } while (chon != 6);
         }
-        static void Main(string[] args)
+        private void Readkeys()
         {
-            int chon;
+
+
+            ConsoleKeyInfo key = new ConsoleKeyInfo();
+            while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape)
+            {
+                key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+
+
+                    case ConsoleKey.UpArrow:
+                        Console.Clear();
+                        Y = Y - 1;
+                        menu();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        Console.Clear();
+                        Y = Y + 1;
+                        menu();
+                        break;
+
+
+
+                }
+            }
+        }
+            static void Main(string[] args)
+        {
+            
             Console.Write("N = ");
             int N = int.Parse(Console.ReadLine());
             int[] A = new int[100];
             nhap(A, N);
             menu();
-            nhapso();
+            nhapso(A,N);
             
             Console.ReadLine();
         }
